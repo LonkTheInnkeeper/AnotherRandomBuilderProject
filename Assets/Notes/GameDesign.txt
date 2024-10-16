@@ -1,0 +1,105 @@
+=== Zdroje ===
+
+Populace
+	- Populace mùže dosáhnout jen takové hranice, kolik je souèet kapacity postavených domù ve vesnici
+	- Populace roste postupnì, pokud je dostatek jídla
+	- Pokud není dostatek jídla, populace klesá
+	- Lidé pøicházejí, nebo odcházejí jednou za den (Ráno)
+	- Pøírùstek, nebo odbyt populace závisí na množství domù a jídla
+	- Pokud je naplnìna kapacita, noví lidé nepøicházejí
+
+	Logic:
+		- pokud Budova ((má maximum jídla || bylo jí dnes doruèeno jídlo) && má volné místo) mùže pøijmout obyvatele
+		- pokud Budova (nebylo dnes doruèeno jídlo && jídlo == 0) ztratí dnes jednoho obyvetele
+
+Jidlo
+	- O jídlo se starají mlýny
+	- Farma mùže za poplatek v tìsné blízkosti postavit pole
+	- Každé pole musí obdìlávat jeden farmáø, jinak pole zanikne
+	- Jídlo konzumují obyvatelé
+
+	Logic:
+		Mlýn:
+		- Mlýn si uloží do seznamu sousedící Pole
+		- Maximální poèet Farmáøù se rovná poètu Polí v seznamu
+		- Každý Farmáø pøidává rychlost výroby jídla
+		- Pokud Mlýn dosáhne maximálního množství uloženého jídla, zavolá si povoz ze stodoly
+
+		Pole:
+		- Pole má pøiøazený svùj Mlýn
+		- Pole lze stavìt jen v blízkosti Mlýna
+		- Každému poli trvá jeden den, než vyprodukuje jídlo, pokud má pøiøazeného farmáøe
+		- Pokud Pole nemá dva dny žádného farmáøe, Pole zanikne
+
+Døevo
+	- O nárùst døeva se stará Døevorubec
+	- Døevorubec musí mít u svého pracovištì alespoò jeden les, aby mohl pracovat
+	- Na každém døevorubcovì stanovišti mùžou být 3 døevorubci
+	- Stanovištì produkuje døevo tak rychle, kolik má døevorubcù
+
+Železo
+	- Železo tìží Horník v Dole
+	- Dùl musí být postavený na nalezišti železa
+	- Každý dùl mùže mít až 3 horníky, což má vliv na rychlost tìžby
+
+Kámen
+	- Kámen dodává Kameník
+	- Kameník musí mít u svého pracovištì alespoò jedno nalezištì kamene
+	- Na každém pracovišti mùžou být až tøi kameníci, což má vliv na rychlost tìžby
+
+Krystal
+	- Funguje jako platidlo
+	- Krystal dodává krystalník
+	- Pracovištì krystalníka musí mít kolem sebe alespoò jedno nalezištì krystalu
+	- Každé pracovištì mùže mít až 3 krystalníky, což má vliv na rychlost tìžby
+
+
+=== Stavby ===
+
+- Každá stavba musí být propojena cestou se stodolou, jinak je neaktivní
+
+velikost 1x1
+Dùm
+	- Pøidává množství lidí, kteøí mùžou žít ve vesnici
+
+Mlýn
+	- Dodává jídlo, které postupnì lidé konzumují
+
+Døevorubec
+	- Dodává døevo na stavbu domù
+
+Kameník
+	- Dodává kámen na stavbu hradeb a nìkterých domù
+
+Dùl
+	- Dodává železo na výrobu vojska
+
+Krystalník
+	- Tìží krystaly
+
+Cesta
+	- Spojuje domy
+
+velikost 1x2 (nudle)
+Kasárna
+	- Vyrábí pìšáky z jídla a železa
+
+Støelnice
+	- Vyrábí luèištníky z jídla, železa a døeva
+
+velikost 2x2
+Stodola
+	- Spojuje všechny domy
+	- Centrální budova
+	- Mùže mít nosièe materiálu, kteøí rozvážejí a shromažïují materiál
+
+
+=== Cesty ===
+
+- Každá budova musí být spojená cestou, která vede ke stodole
+
+ConnectionCheck
+- Každá cesta má svùj Connection check
+- Stodola zjistí, jestli vedle ní je nìjaká cesta, uloží si ji do seznamu a spustí na každé z nich ConnectionCheck
+- Každá tato cesta se podívá, jestli vedle ní je další cesta, zjistí, jestli už je v seznamu a pokud ne, spustí ConnectionCheck i na ní a pøidá ji do seznamu
+- Jakmile dojde sekvence do slepé ulièky, všechny cesty v seznamu mají connected = true
