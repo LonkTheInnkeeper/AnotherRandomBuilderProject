@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BordersTest : MonoBehaviour
@@ -9,6 +10,8 @@ public class BordersTest : MonoBehaviour
     public Transform pref;
     public int size;
 
+    List<MapCell> area = new List<MapCell>();
+
     MapManager mapManager;
 
     private void Start()
@@ -17,17 +20,39 @@ public class BordersTest : MonoBehaviour
     }
 
 
-    // Note:
-    // Nesnaž se poèítat pozici krajních bunìk, ale iteruj okruhy sousedících bunìk (BFS algoritmus)
     public void Test()
     {
-        foreach(MapCell cell in mapManager.grids[0].GetGridCells()) 
+        List<MapCell> exploring = new List<MapCell>();
+        List<MapCell> toExplore = new List<MapCell>();
+
+        MapCell origin = mapManager.GetCellByID(0, originID);
+        area.Add(origin);
+
+        exploring.AddRange(origin.GetNeighbors());
+
+        for (int i = 0; i < size; i++)
         {
-            //Vector2Int id = cell.GetID();
-            //if()
-            //{
-            //    Instantiate(pref, mapManager.GetCellByID(0, id).GetCoordinates(), Quaternion.identity);
-            //}
+            foreach (MapCell cell in exploring)
+            {
+                foreach (MapCell exploringCell in cell.GetNeighbors())
+                {
+                    if (!area.Contains(exploringCell) && 
+                        !toExplore.Contains(exploringCell) && 
+                        !exploring.Contains(exploringCell))
+                    {
+                        toExplore.Add(exploringCell);
+                    }
+                }
+            }
+
+            area.AddRange(exploring);
+            exploring = toExplore;
+            toExplore = new List<MapCell>();
+        }
+
+        foreach (MapCell cell in area)
+        {
+            var cube = Instantiate(pref, cell.GetCoordinates(), Quaternion.identity);
         }
     }
 }

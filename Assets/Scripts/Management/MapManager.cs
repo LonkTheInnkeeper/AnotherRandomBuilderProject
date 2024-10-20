@@ -9,15 +9,19 @@ public class MapManager : MonoBehaviour
     public static MapManager Instance;
 
     public List<MapGrid> grids;
-    public List<Village> villages;
+    public List<BuildableArea> buildableAreas;
 
+    [Space]
     public Transform cellBlockPref;
 
+    [Space]
     public bool gridDebug;
+    public bool areaDebug;
 
     public MapCell activeCell;
     public ResourceEditor resourceEditor;
 
+    [Space]
     public UnityEvent gridGenerated;
 
     private void Awake()
@@ -29,6 +33,7 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         GenerateHexGrid();
+        GenerateBuidableArea();
         resourceEditor.LoadResource(SaveLoadSystem.LoadMapResources());
         gridGenerated.Invoke();
     }
@@ -76,6 +81,14 @@ public class MapManager : MonoBehaviour
         foreach (MapGrid grid in grids)
         {
             grid.cellsList = grid.GetGridCells();
+        }
+    }
+
+    private void GenerateBuidableArea()
+    {
+        for (int i = 0; i < buildableAreas.Count; i++)
+        {
+            buildableAreas[i].GenerateArea(i);
         }
     }
 

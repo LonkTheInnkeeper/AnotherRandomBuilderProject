@@ -10,6 +10,7 @@ public class Villager
     private Army army;
     private string name = "I'm a Villager";
     private VillagerBody body;
+    private int areaIndex;
 
     public Villager()
     {
@@ -65,6 +66,7 @@ public class Villager
 
         home.villagers.Add(this);
         this.home = home;
+        areaIndex = home.GetBuilding().areaIndex;
     }
 
     public PopulationManager.VillagerProfession GetProfession() { return profession; }
@@ -78,10 +80,18 @@ public class Villager
         if (home == null) return true;
         else return false;
     }
-    public void SetHome(House home) { this.home = home; }
+    public void SetHome(House home) 
+    {
+        this.home = home;
+        if (home != null) 
+        {
+            areaIndex = home.GetBuilding().areaIndex;
+        }
+    }
     public House GetHouse() { return home; }
     public void SetBody(VillagerBody body) { this.body = body; }
     public VillagerBody GetBody() { return body; }
     public void SetArmy(Army army) {  this.army = army; }
     public Army GetArmy() { return army; }
+    public void SetAreaIndex(int areaIndex) { this.areaIndex = areaIndex; }
 }

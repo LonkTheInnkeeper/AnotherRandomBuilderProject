@@ -19,12 +19,16 @@ public class Building : MonoBehaviour
     public bool export = false;
     public bool exported = false;
 
+    [HideInInspector] public int areaIndex;
+
     int rotationIndex;
 
     private void Start()
     {
         InvokeRepeating(nameof(Export), 0, 2);
         buildingSize = BuildBuilding();
+        areaIndex = cell.areaIndex;
+
         foreach (MapCell cell in buildingSize)
         {
             cell.SetCellText(buildingType.ToString());
@@ -68,7 +72,11 @@ public class Building : MonoBehaviour
 
     public void SetCell(MapCell cell)
     {
-        if (this.cell == null) this.cell = cell;
+        if (this.cell == null)
+        { 
+            this.cell = cell;
+            areaIndex = cell.areaIndex;
+        }
         else return;
     }
     public void SetRotation(int rotationIndex)

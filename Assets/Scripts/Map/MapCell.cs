@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Data;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class MapCell
@@ -18,6 +20,9 @@ public class MapCell
     public ResourceManager.ResourceType resourceType = ResourceManager.ResourceType.None;
     public BuildingsManager.BuildingType buildingType = BuildingsManager.BuildingType.None;
 
+    // Buildabel Area
+    public bool isInArea;
+    public int areaIndex;
 
     // Pathfinding SetUp
     public float cost = 1;          // Movement cost
@@ -35,6 +40,12 @@ public class MapCell
 
         this.x = xID;
         this.y = yID;
+    }
+
+    public void SetBuildableAre(bool isInArea, int areaIndex)
+    {
+        this.isInArea = isInArea;
+        this.areaIndex = areaIndex;
     }
 
     public void SetCellBlock(CellBlock cellBlock)

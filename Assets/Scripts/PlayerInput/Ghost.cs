@@ -102,7 +102,7 @@ public class Ghost : MonoBehaviour
         {
             foreach (MapCell _cell in GetBuildingSize(cell))
             {
-                if (_cell.occupied == true)
+                if (_cell.occupied || !_cell.isInArea)
                 {
                     ChangeOccupiedMaterial(true);
                     return;
@@ -112,7 +112,7 @@ public class Ghost : MonoBehaviour
             // Check general building occupation
             if (activeBuilding != null && activeBuilding.GetBuildingType() != BuildingsManager.BuildingType.Mine)
             {
-                ChangeOccupiedMaterial(cell == null || cell.occupied);
+                ChangeOccupiedMaterial(cell == null || cell.occupied || !cell.isInArea);
             }
 
             // Check occupation for Mine

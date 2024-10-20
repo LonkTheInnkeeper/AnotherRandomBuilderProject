@@ -35,7 +35,7 @@ public class Builder : MonoBehaviour
 
             foreach (MapCell _cell in GetBuildingSize(cell, activeBuilding))
             {
-                if (_cell.occupied) return;
+                if (_cell.occupied || !_cell.isInArea) return;
             }
 
             if (activeBuilding.GetBuildingType() != BuildingsManager.BuildingType.Mine &&
