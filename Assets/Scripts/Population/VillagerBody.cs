@@ -10,6 +10,8 @@ public class VillagerBody : MonoBehaviour, ICharacter
     float tickTime;
     bool moving = false;
 
+    int areaIndex = 0;
+
     [HideInInspector] public bool despawning = false;
 
     Building currentBuilding;
@@ -159,9 +161,11 @@ public class VillagerBody : MonoBehaviour, ICharacter
     // === SPAWNING ===
     void StartingPosition()
     {
+        MapCell spawnCell = mapMan.buildableAreas[areaIndex].originCell;
+
         List<MapCell> mapCells = MapManager.Instance.grids[0].cellsList;
-        currentCell = popMan.spawn;
-        transform.position = popMan.spawn.GetCoordinates();
+        currentCell = spawnCell;
+        transform.position = spawnCell.GetCoordinates();
     }
     public void Despawning()
     {

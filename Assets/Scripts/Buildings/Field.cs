@@ -18,15 +18,15 @@ public class Field : MonoBehaviour
 
     private void Update()
     {
-        if (hasFarmer && gameManager.day)
-        {
-            harvestTime -= Time.deltaTime;
+        //if (hasFarmer && gameManager.day)
+        //{
+        //    harvestTime -= Time.deltaTime;
 
-            if (harvestTime < 0)
-            {
-                PopulationManager.Instance.UpdateFood(1);
-                harvestTime = harvestTimeOrigin;
-            }
-        }
+        //    if (harvestTime < 0)
+        //    {
+        //        PopulationManager.Instance.UpdateFood(1);
+        //        harvestTime = harvestTimeOrigin;
+        //    }
+        //}
     }
 }

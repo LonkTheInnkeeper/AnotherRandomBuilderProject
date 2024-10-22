@@ -118,7 +118,7 @@ public class ProductionBuilding : MonoBehaviour, IProduction
 
         if (add && workers.Count < maxWorkers && populationMan.availableVillagers.Count >= amount)
         {
-            List<Villager> workers = populationMan.GetVillagersToWork(1, PopulationManager.VillagerProfession.Worker, building);
+            List<Villager> workers = populationMan.GetVillagersToWork(1, PopulationManager.VillagerProfession.Worker, building, building.areaIndex);
 
             this.workers.AddRange(workers);
         }
@@ -134,7 +134,7 @@ public class ProductionBuilding : MonoBehaviour, IProduction
             }
 
         }
-        populationMan.UpdatePopulationState();
+        MapManager.Instance.buildableAreas[building.areaIndex].UpdatePopulationState();
 
         print(workers.Count.ToString());
     }

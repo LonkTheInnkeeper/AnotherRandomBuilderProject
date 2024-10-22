@@ -45,7 +45,7 @@ public class ArmyBuilding : MonoBehaviour
             Army army = new Army(armyType, villagers, spawnCell);
             armies.Add(army);
 
-            populationMan.UpdatePopulationState();
+            MapManager.Instance.buildableAreas[building.areaIndex].UpdatePopulationState();
         }
     }
 

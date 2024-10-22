@@ -14,3 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 5
   originID: {x: 18, y: 7}
+  startupPopulation: 20
+  maxPopulaton: 0
+  workers: 0
+  wood: 0
+  stone: 0
+  iron: 0
+  food: 0
+  crystal: 0

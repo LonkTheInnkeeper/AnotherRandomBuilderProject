@@ -12,8 +12,9 @@ public class Villager
     private VillagerBody body;
     private int areaIndex;
 
-    public Villager()
+    public Villager(int areaIndex)
     {
+        this.areaIndex = areaIndex;
         profession = PopulationManager.VillagerProfession.None;
         SetGender();
         //SetName();

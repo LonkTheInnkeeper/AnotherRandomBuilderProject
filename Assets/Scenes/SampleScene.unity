@@ -16607,6 +16607,7 @@ MonoBehaviour:
   dayNight: {fileID: 1841423465}
   day: 1
   editing: 1
+  activeArea: {fileID: 0}
   currentState: 2
   newDay:
     m_PersistentCalls:
@@ -16635,17 +16636,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54f273783fb5d5f418f1818bd3bdbe81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodCounter: {fileID: 2132196634}
-  woodCounter: {fileID: 1807439921}
-  stoneCounter: {fileID: 1319410386}
-  ironCounter: {fileID: 765439671}
-  crystalCounter: {fileID: 1721245290}
-  food: 0
-  wood: 0
-  stone: 0
-  iron: 0
-  crystal: 0
-  noFood: 0
   resources:
   - {fileID: 695145609238090796, guid: 4c4408fe7f6a92a4e99770aa5e1216ed, type: 3}
   - {fileID: 6081849615126076956, guid: 7f3fa0b0aa1a2604f9fc2e7b442ace1a, type: 3}
@@ -16674,6 +16664,13 @@ MonoBehaviour:
   messagePanel: {fileID: 108951774}
   messageText: {fileID: 1607559136}
   hideDelay: 5
+  resourcesPanel: {fileID: 1005723040}
+  populationCounter: {fileID: 1458164529}
+  woodCounter: {fileID: 1807439921}
+  stoneCounter: {fileID: 1319410386}
+  ironCounter: {fileID: 765439671}
+  foodCounter: {fileID: 2132196634}
+  crystalCounter: {fileID: 1721245290}
 --- !u!114 &1899566032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16686,9 +16683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d534c13b81e26e348b4be24c1f180bdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startupPopulation: 0
-  maxPopulaton: 0
-  workers: 0
   soldiers: 0
   maleNames: []
   femaleNames: []
@@ -16729,6 +16723,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  cameraPoint: {fileID: 614019723}
 --- !u!114 &1899566034
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class MapGrid : MonoBehaviour
     public int gridSize;
     public MapCell[,] cells;
     public List<MapCell> cellsList;
+    public Dictionary<Vector3, MapCell> cellDictionary = new Dictionary<Vector3, MapCell>();
     public int gridIndex;
     public float hexOffsetX;
     public float hexOffsetZ;

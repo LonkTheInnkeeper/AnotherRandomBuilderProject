@@ -73,12 +73,21 @@ static class Tools
             return false;
     }
 
-    public static Vector3 GetHexGridPosition(float xOffset, float zOffset)
+    public static Vector3 GetMouseHexGridPosition(float xOffset, float zOffset)
     {
         Vector3 mousePosition = GetMouseRayHit().point;
         float x = Mathf.Round(mousePosition.x / xOffset) * xOffset;
         float y = 0;
         float z = Mathf.Round(mousePosition.z / zOffset) * zOffset;
+
+        return new Vector3(x, y, z);
+    }
+
+    public static Vector3 GetVectorHexGridPosition(Vector3 vector, float xOffset, float zOffset)
+    {
+        float x = Mathf.Round(vector.x / xOffset) * xOffset;
+        float y = 0;
+        float z = Mathf.Round(vector.z / zOffset) * zOffset;
 
         return new Vector3(x, y, z);
     }

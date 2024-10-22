@@ -7,22 +7,6 @@ public class ResourceManager : MonoBehaviour
 {
     public static ResourceManager Instance;
 
-    [Header("UI")]
-    public TextMeshProUGUI foodCounter;
-    public TextMeshProUGUI woodCounter;
-    public TextMeshProUGUI stoneCounter;
-    public TextMeshProUGUI ironCounter;
-    public TextMeshProUGUI crystalCounter;
-
-    [Header("Values")]
-    public int food;
-    public int wood;
-    public int stone;
-    public int iron;
-    public int crystal;
-
-    public bool noFood = false;
-
     [Header("Editing resource")]
     public List<Transform> resources;
     public List<ResourceData> resourceDatas = new List<ResourceData>();
@@ -58,7 +42,6 @@ public class ResourceManager : MonoBehaviour
         buildingsMan = BuildingsManager.Instance;
         input = InputManager.Instance;
         resourceTypes = (ResourceType[])Enum.GetValues(typeof(ResourceType));
-        UpdateUI();
     }
 
     private void Update()
@@ -168,14 +151,4 @@ public class ResourceManager : MonoBehaviour
         // Sellect a random barn and tell it to do its job
         barns[UnityEngine.Random.Range(0, barns.Count)].SendCart(building);
     }
-    public void UpdateUI()
-    {
-        foodCounter.text = food.ToString();
-        woodCounter.text = wood.ToString();
-        stoneCounter.text = stone.ToString();
-        ironCounter.text = iron.ToString();
-        crystalCounter.text = crystal.ToString();
-    }
 }
-
-

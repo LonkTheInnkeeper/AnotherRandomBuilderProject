@@ -74,22 +74,24 @@ public class Barn : MonoBehaviour
 
     public void EmptyCart(int resources, ResourceManager.ResourceType resourceType)
     {
+        BuildableArea area = MapManager.Instance.buildableAreas[building.areaIndex];
+
         switch (resourceType)
         {
             case ResourceManager.ResourceType.Forest:
-                resourceMan.wood += resources;
+                area.wood += resources;
                 break;
             case ResourceManager.ResourceType.Rock:
-                resourceMan.stone += resources;
+                area.stone += resources;
                 break;
             case ResourceManager.ResourceType.Ore:
-                resourceMan.iron += resources;
+                area.iron += resources;
                 break;
             case ResourceManager.ResourceType.Crystal:
-                resourceMan.crystal += resources;
+                area.crystal += resources;
                 break;
             case ResourceManager.ResourceType.Field:
-                resourceMan.food += resources;
+                area.food += resources;
                 break;
             case ResourceManager.ResourceType.None:
                 break;
@@ -97,7 +99,7 @@ public class Barn : MonoBehaviour
 
         cartsInUse--;
 
-        resourceMan.UpdateUI();
+        //UIManager.Instance.UpdateResourcesUI(area);
     }
 
     public void AddWorkers(bool add)
@@ -106,7 +108,7 @@ public class Barn : MonoBehaviour
 
         if (add && workers.Count < maxWorkers && populationMan.availableVillagers.Count >= amount)
         {
-            List<Villager> workers = populationMan.GetVillagersToWork(1, PopulationManager.VillagerProfession.Worker, building);
+            List<Villager> workers = populationMan.GetVillagersToWork(1, PopulationManager.VillagerProfession.Worker, building, building.areaIndex);
 
             this.workers.AddRange(workers);
         }
@@ -121,7 +123,7 @@ public class Barn : MonoBehaviour
                 workers.Remove(worker);
             }
 
-            populationMan.UpdatePopulationState();
+            MapManager.Instance.buildableAreas[building.areaIndex].UpdatePopulationState();
         }
     }
     public int GetWorkersCount()

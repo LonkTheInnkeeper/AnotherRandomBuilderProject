@@ -17,7 +17,7 @@ public class House : MonoBehaviour
         cell = building.GetCell();
 
         maxFood = maxPopulation;
-        PopulationManager.Instance.UpdateMaxPopulation();
+        MapManager.Instance.buildableAreas[building.areaIndex].UpdateMaxPopulation();
         FindVillagers();
     }
 

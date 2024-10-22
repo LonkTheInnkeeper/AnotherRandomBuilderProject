@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public bool day = true;
     public bool editing;
 
+    public BuildableArea activeArea;
+
     public GameState currentState;
 
     public ICharacter activeCharacter;

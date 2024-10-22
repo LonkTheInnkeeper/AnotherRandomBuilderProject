@@ -24,6 +24,11 @@ public class MapManager : MonoBehaviour
     [Space]
     public UnityEvent gridGenerated;
 
+    [Space]
+    public Transform cameraPoint;
+
+    GameManager gameManager;
+
     private void Awake()
     {
         Instance = this;
@@ -32,10 +37,32 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
+        gameManager = GameManager.Instance;
         GenerateHexGrid();
         GenerateBuidableArea();
         resourceEditor.LoadResource(SaveLoadSystem.LoadMapResources());
         gridGenerated.Invoke();
+    }
+
+    private void Update()
+    {
+        SetActiveArea();
+    }
+
+    private void SetActiveArea()
+    {
+        MapCell cell = GetVectorMapCell(cameraPoint.position);
+
+
+        if (cell == null) return;
+        if (!cell.isInArea) 
+        {
+            gameManager.activeArea = null;
+            return;
+        }
+
+        print("Active area = " + gameManager.activeArea != null);
+        gameManager.activeArea = buildableAreas[cell.areaIndex];
     }
 
     private void GenerateHexGrid()
@@ -80,7 +107,13 @@ public class MapManager : MonoBehaviour
 
         foreach (MapGrid grid in grids)
         {
-            grid.cellsList = grid.GetGridCells();
+            List<MapCell> cells = grid.GetGridCells();
+            grid.cellsList = cells;
+
+            foreach (MapCell cell in cells)
+            {
+                grid.cellDictionary[cell.GetCoordinates()] = cell;
+            }
         }
     }
 
@@ -108,7 +141,7 @@ public class MapManager : MonoBehaviour
         catch (Exception e)
         {
             //Debug.LogError($"MapCell {ID.x}, {ID.y} is out of range.");
-            return null; 
+            return null;
         }
     }
 
@@ -117,13 +150,51 @@ public class MapManager : MonoBehaviour
         foreach (MapCell cell in grids[0].cells)
         {
             Vector3 cellPos = cell.GetCoordinates();
-            Vector3 mousePos = Tools.GetHexGridPosition(grids[0].hexOffsetX, grids[0].hexOffsetZ);
+            Vector3 mousePos = Tools.GetMouseHexGridPosition(grids[0].hexOffsetX, grids[0].hexOffsetZ);
 
             if (cellPos == mousePos) return cell;
             else continue;
         }
 
         return null;
+
+        //Vector3 mousePos = Tools.GetMouseHexGridPosition(grids[0].hexOffsetX, grids[0].hexOffsetZ);
+
+        //if (grids[0].cellDictionary.TryGetValue(mousePos, out MapCell foundCell))
+        //{
+        //    return foundCell;
+        //}
+        //else
+        //{
+        //    return null;
+        //}
+    }
+
+    MapCell GetVectorMapCell(Vector3 vector)
+    {
+        Vector3 hexVector = Tools.GetVectorHexGridPosition(vector, grids[0].hexOffsetX, grids[0].hexOffsetZ);
+
+        foreach (MapCell cell in grids[0].cells)
+        {
+            Vector3 cellPos = cell.GetCoordinates();
+            Vector3 hexPos = Tools.GetVectorHexGridPosition(hexVector, grids[0].hexOffsetX, grids[0].hexOffsetZ);
+
+            if (cellPos == hexPos) return cell;
+            else continue;
+        }
+
+        return null;
+
+        //Vector3 hexVector = Tools.GetVectorHexGridPosition(vector, grids[0].hexOffsetX, grids[0].hexOffsetZ);
+
+        //if (grids[0].cellDictionary.TryGetValue(hexVector, out MapCell foundCell))
+        //{
+        //    return foundCell;
+        //}
+        //else
+        //{
+        //    return null;
+        //}
     }
 
     public void SetMapCell()
@@ -131,7 +202,7 @@ public class MapManager : MonoBehaviour
         foreach (MapCell cell in grids[0].cells)
         {
             Vector3 cellPos = cell.GetCoordinates();
-            Vector3 mousePos = Tools.GetHexGridPosition(grids[0].hexOffsetX, grids[0].hexOffsetZ);
+            Vector3 mousePos = Tools.GetMouseHexGridPosition(grids[0].hexOffsetX, grids[0].hexOffsetZ);
 
             if (cellPos == mousePos)
             {
