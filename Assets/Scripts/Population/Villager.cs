@@ -81,18 +81,20 @@ public class Villager
         if (home == null) return true;
         else return false;
     }
-    public void SetHome(House home) 
+    public void SetHome(House home)
     {
         this.home = home;
-        if (home != null) 
+        if (home != null)
         {
             areaIndex = home.GetBuilding().areaIndex;
+            Debug.Log("Jsem doma");
         }
     }
     public House GetHouse() { return home; }
     public void SetBody(VillagerBody body) { this.body = body; }
     public VillagerBody GetBody() { return body; }
-    public void SetArmy(Army army) {  this.army = army; }
+    public void SetArmy(Army army) { this.army = army; }
     public Army GetArmy() { return army; }
     public void SetAreaIndex(int areaIndex) { this.areaIndex = areaIndex; }
+    public int GetAreaIndex() { return areaIndex; }
 }

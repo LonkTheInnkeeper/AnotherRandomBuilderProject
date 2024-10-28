@@ -18,9 +18,12 @@ public class ProductionBuilding : MonoBehaviour, IProduction
 
     Building building;
     List<ResourceHandler> resources = new List<ResourceHandler>();
+    PopulationManager popMan;
 
     private void Start()
     {
+        popMan = PopulationManager.Instance;
+
         building = GetComponent<Building>();
         GetResources();
 
@@ -35,6 +38,41 @@ public class ProductionBuilding : MonoBehaviour, IProduction
         if (storage != 0)
             building.export = true;
         else building.export = false;
+    }
+
+    public void AddWorkers(bool add)
+    {
+        int amount = 1;
+
+        List<Villager> availableVillagers = MapManager.Instance.buildableAreas[building.areaIndex].GetAvailableVillagers();
+        print($"available villagers:{availableVillagers.Count}");
+
+        if (add && workers.Count < maxWorkers && availableVillagers.Count >= amount)
+        {
+            List<Villager> workers = popMan.GetVillagersToWork(amount, PopulationManager.VillagerProfession.Worker, building, building.areaIndex);
+
+            print($"workers to assign: {workers.Count}");
+
+            foreach (Villager villager in workers)
+            {
+                this.workers.Add(villager);
+            }
+        }
+
+        if (!add && workers.Count > 0)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                var worker = workers[Random.Range(0, workers.Count)];
+                worker.SetProfession(PopulationManager.VillagerProfession.None);
+                worker.SetWorkingPlace(null);
+                workers.Remove(worker);
+            }
+
+        }
+        MapManager.Instance.buildableAreas[building.areaIndex].UpdatePopulationState();
+
+        print($"Building workers: {workers.Count.ToString()}");
     }
 
     public void GetResources()
@@ -107,36 +145,6 @@ public class ProductionBuilding : MonoBehaviour, IProduction
     public ResourceManager.ResourceType GetResourceType()
     {
         return resourceType;
-    }
-
-    public void AddWorkers(bool add)
-    {
-        print("Adding workers");
-        int amount = 1;
-
-        PopulationManager populationMan = PopulationManager.Instance;
-
-        if (add && workers.Count < maxWorkers && populationMan.availableVillagers.Count >= amount)
-        {
-            List<Villager> workers = populationMan.GetVillagersToWork(1, PopulationManager.VillagerProfession.Worker, building, building.areaIndex);
-
-            this.workers.AddRange(workers);
-        }
-
-        if (!add && workers.Count > 0)
-        {
-            for (int i = 0; i < amount; i++)
-            {
-                var worker = workers[Random.Range(0, workers.Count)];
-                worker.SetProfession(PopulationManager.VillagerProfession.None);
-                worker.SetWorkingPlace(null);
-                workers.Remove(worker);
-            }
-
-        }
-        MapManager.Instance.buildableAreas[building.areaIndex].UpdatePopulationState();
-
-        print(workers.Count.ToString());
     }
 
     public int GetWorkersCount()

@@ -75,17 +75,18 @@ public class PopulationManager : MonoBehaviour
 
     public List<Villager> GetVillagersToWork(int amount, VillagerProfession profession, Building workingPlace, int areaIndex)
     {
-        List<Villager> villagers = new List<Villager>();
         BuildableArea area = mapMan.buildableAreas[areaIndex];
+        List<Villager> villagers = new List<Villager>();
+        List<Villager> availableVillagers = area.GetAvailableVillagers();
 
         if (amount > 0 && availableVillagers.Count >= amount)
         {
             for (int i = 0; i < amount; i++)
             {
-                var villager = area.GetAvailableVillagers()[i];
-                area.AddVillager(villager);
+                var villager = availableVillagers[i];
                 villager.SetProfession(profession);
                 villager.SetWorkingPlace(workingPlace);
+                villagers.Add(villager);
             }
 
             area.UpdatePopulationState();
@@ -150,5 +151,13 @@ public class PopulationManager : MonoBehaviour
             area.RemoveVillager(villager);
         }
 
+    }
+
+    public void UpdatePopulation()
+    {
+        foreach (var area in mapMan.buildableAreas)
+        {
+            area.UpdatePopulation();
+        }
     }
 }

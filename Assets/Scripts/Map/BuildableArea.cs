@@ -8,7 +8,7 @@ public class BuildableArea : ScriptableObject
     [SerializeField] int size;
     [SerializeField] Vector2Int originID;
 
-    int areaIndex;
+    public int areaIndex;
 
     public MapCell originCell;
     List<MapCell> area = new List<MapCell>();
@@ -74,6 +74,8 @@ public class BuildableArea : ScriptableObject
         if (mapMan.areaDebug)
             AreaDebug();
 
+        UpdatePopulationState();
+
         PopulationManager.Instance.SpawnVillager(startupPopulation, areaIndex);
     }
 
@@ -83,6 +85,8 @@ public class BuildableArea : ScriptableObject
         {
             cell.SetCellText($"{cell.GetID().ToString()}\nArea {areaIndex.ToString()}");
         }
+
+        Debug.Log($"Area {areaIndex} spawned");
     }
 
     public void AddVillager(Villager villager) { villagers.Add(villager); }
@@ -187,6 +191,19 @@ public class BuildableArea : ScriptableObject
         availableVillagers = freeVillagers;
     }
 
-    public List<Villager> GetAvailableVillagers() {  return availableVillagers; }
+    public List<Villager> GetAvailableVillagers() 
+    {
+        availableVillagers = new List<Villager>();
+
+        foreach (Villager villager in villagers)
+        {
+            if (villager.GetWorkingPlace() == null)
+                availableVillagers.Add(villager);
+        }
+
+        return availableVillagers;
+    }
+    public List<Villager> GetAllVillagers() { return villagers; }
     public int GetVillagerCount() { return availableVillagers.Count; }
+    public List<MapCell> GetAllCells() { return area; }
 }

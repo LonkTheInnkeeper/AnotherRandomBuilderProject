@@ -79,6 +79,25 @@ public class Mover : MonoBehaviour
             SetPath(start, targetCell);
     }
 
+    public void SetRandomEndCell(MapCell start, int range, int areaIndex)
+    {
+        Vector2Int currentCellID = start.GetID();
+        Vector2Int lastCellID = mapMan.grids[0].GetGridCells().Last().GetID();
+        Vector2Int newCellID;
+
+        newCellID = new Vector2Int(currentCellID.x + Random.Range(-range, range), currentCellID.y + Random.Range(-range, range));
+        MapCell targetCell = mapMan.GetCellByID(0, newCellID);
+
+        if (targetCell == null) return;
+
+        if (!mapMan.buildableAreas[areaIndex].GetAllCells().Contains(targetCell))
+        {
+            //SetMoving(false);
+            return;
+        }
+
+        SetPath(start, targetCell);
+    }
 
     public void SetPath(MapCell start, MapCell end)
     {

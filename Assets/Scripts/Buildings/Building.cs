@@ -19,7 +19,7 @@ public class Building : MonoBehaviour
     public bool export = false;
     public bool exported = false;
 
-    [HideInInspector] public int areaIndex;
+    public int areaIndex;
 
     int rotationIndex;
 

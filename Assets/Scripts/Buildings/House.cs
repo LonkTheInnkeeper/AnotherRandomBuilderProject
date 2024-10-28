@@ -27,7 +27,7 @@ public class House : MonoBehaviour
 
         List<Villager> homeless = new List<Villager> ();
 
-        foreach (Villager villager in PopulationManager.Instance.availableVillagers)
+        foreach (Villager villager in MapManager.Instance.buildableAreas[building.areaIndex].GetAllVillagers())
         {
             if (villager.IsHomeless())
                 homeless.Add (villager);

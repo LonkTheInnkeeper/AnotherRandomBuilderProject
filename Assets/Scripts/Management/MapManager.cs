@@ -61,7 +61,6 @@ public class MapManager : MonoBehaviour
             return;
         }
 
-        print("Active area = " + gameManager.activeArea != null);
         gameManager.activeArea = buildableAreas[cell.areaIndex];
     }
 

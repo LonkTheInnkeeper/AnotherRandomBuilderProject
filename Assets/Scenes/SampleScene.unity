@@ -16601,7 +16601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeDay: 1
-  dayTimeOrigin: 10
+  dayTimeOrigin: 30
   nightTimeOrigin: 10
   dayTimeCounter: {fileID: 1601803919}
   dayNight: {fileID: 1841423465}
@@ -16704,6 +16704,7 @@ MonoBehaviour:
   - {fileID: 2101827618}
   buildableAreas:
   - {fileID: 11400000, guid: 5e019a7e4098f034d9ef526a950c1823, type: 2}
+  - {fileID: 11400000, guid: 1604cd3c68e7de44eb96ff4dde3f0dc7, type: 2}
   cellBlockPref: {fileID: 7210811506325392469, guid: 2f148c8d096d4c042b868edd8397a0af, type: 3}
   gridDebug: 0
   areaDebug: 1

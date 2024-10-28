@@ -27,6 +27,8 @@ public class VillagerBody : MonoBehaviour, ICharacter
     {
         this.villager = villager;
         villager.SetBody(this);
+        areaIndex = villager.GetAreaIndex();
+
         gameMan = GameManager.Instance;
         mapMan = MapManager.Instance;
         popMan = PopulationManager.Instance;
@@ -35,6 +37,8 @@ public class VillagerBody : MonoBehaviour, ICharacter
         StartingPosition();
 
         tickTime = tickConstant;
+
+        print(areaIndex);
     }
 
     private void Update()
@@ -96,7 +100,7 @@ public class VillagerBody : MonoBehaviour, ICharacter
     {
         if (villager.GetWorkingPlace() == null && villager.GetArmy() == null && !moving)
         {
-            mover.SetRandomEndCell(currentCell, 3);
+            mover.SetRandomEndCell(currentCell, 3, areaIndex);
         }
     }
     void Working()
